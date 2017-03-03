@@ -25,6 +25,10 @@
 "="			{ return yytext[0]; }
 "<"			{ return yytext[0]; }
 ">"			{ return yytext[0]; }
+"("			{ return yytext[0]; }
+")"			{ return yytext[0]; }
+"["			{ return yytext[0]; }
+"]"			{ return yytext[0]; }
 
 if			{ return IF; }
 ifelse		{ return IFELSE; }
@@ -42,21 +46,21 @@ ycor		{ return YCOR; }
 
 
 color		{ return COLOR; }
-black		{ yylval.colortype = BLACK; return COLOR_NAME; }
-white		{ yylval.colortype = WHITE; return COLOR_NAME; }
-cyan		{ yylval.colortype = CYAN; return COLOR_NAME; }
-orange		{ yylval.colortype = ORANGE; return COLOR_NAME; }
-yellow		{ yylval.colortype = YELLOW; return COLOR_NAME; }
-lime		{ yylval.colortype = LIME; return COLOR_NAME; }
-blue		{ yylval.colortype = BLUE; return COLOR_NAME; }
-magenta		{ yylval.colortype = MAGENTA; return COLOR_NAME; }
-red			{ yylval.colortype = RED; return COLOR_NAME; }
-brown		{ yylval.colortype = BROWN; return COLOR_NAME; }
-green		{ yylval.colortype = GREEN; return COLOR_NAME; }
-turqoise	{ yylval.colortype = TURQOISE; return COLOR_NAME; }
-sky			{ yylval.colortype = SKY; return COLOR_NAME; }
-violet		{ yylval.colortype = VIOLET; return COLOR_NAME; }
-pink		{ yylval.colortype = PINK; return COLOR_NAME; }
+black		{ yylval.value = BLACK; return COLOR_NAME; }
+white		{ yylval.value = WHITE; return COLOR_NAME; }
+cyan		{ yylval.value = CYAN; return COLOR_NAME; }
+orange		{ yylval.value = ORANGE; return COLOR_NAME; }
+yellow		{ yylval.value = YELLOW; return COLOR_NAME; }
+lime		{ yylval.value = LIME; return COLOR_NAME; }
+blue		{ yylval.value = BLUE; return COLOR_NAME; }
+magenta		{ yylval.value = MAGENTA; return COLOR_NAME; }
+red			{ yylval.value = RED; return COLOR_NAME; }
+brown		{ yylval.value = BROWN; return COLOR_NAME; }
+green		{ yylval.value = GREEN; return COLOR_NAME; }
+turquoise	{ yylval.value = TURQUOISE; return COLOR_NAME; }
+sky			{ yylval.value = SKY; return COLOR_NAME; }
+violet		{ yylval.value = VIOLET; return COLOR_NAME; }
+pink		{ yylval.value = PINK; return COLOR_NAME; }
 
 .			{ }
 \n			{ yylineno++; }

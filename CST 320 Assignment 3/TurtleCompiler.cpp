@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include "symtable.h"
 #include "tree.h"
-#include "TurtleYacc.h"
+#include "TurtleYacc.tab.h"
 
 int yyparse();
 

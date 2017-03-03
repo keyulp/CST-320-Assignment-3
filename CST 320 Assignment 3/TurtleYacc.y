@@ -34,7 +34,7 @@ int yylex(void);
 %token PD
 %token PU
 %token <value> NUMBER
-%token <colortype> COLOR_NAME
+%token <value> COLOR_NAME
 %token COLOR
 %token XCOR
 %token YCOR
@@ -82,14 +82,14 @@ statement:	HOME								{ $$ = factory->CreateTurtleCmd(CMD_HOME); }
 	|	RT expression							{ $$ = factory->CreateTurtleCmd(CMD_RT, $2); }
 	|	LT expression							{ $$ = factory->CreateTurtleCmd(CMD_LT, $2); }
 	|	SETC expression							{ $$ = factory->CreateTurtleCmd(CMD_SETC, $2); }
-	|	IF '(' condition ')' '[' statements ']'	{ $$ = factory->CreateIf($3, $6); }
-	|	IFELSE '(' condition ')' '[' statements ']''[' statements ']'	{ $$ = factory->CreateIfElse ($3, $6, $9); }
-	|	REPEAT	expression '[' statements ']'	{ $$ = factory->CreateRepeat($2, $4); }
+	|	IF '(' condition ')' '[' statements ']'	{ $$ = factory->CreateIf($3, (BlockTreeNode*)$6); }
+	|	IFELSE '(' condition ')' '[' statements ']''[' statements ']'	{ $$ = factory->CreateIfElse ($3, (BlockTreeNode*)$6, (BlockTreeNode*)$9); }
+	|	REPEAT	expression '[' statements ']'	{ $$ = factory->CreateRepeat($2, (BlockTreeNode*)$4); }
 	;
 
-condition: function '<' expression				{ $$ = factory->CreateOperator(OT_GREATERTHAN, $1, $3); }
-	|	function '>' expression					{ $$ = factory->CreateOperator(OT_LESSTHAN, $1, $3); }
-	|	function '=' expression					{ $$ = factory->CreateOperator(OT_EQUALS, $1, $3); }
+condition: expression '<' expression			{ $$ = factory->CreateOperator(OT_LESSTHAN, $1, $3); }
+	|	expression '>' expression				{ $$ = factory->CreateOperator(OT_GREATERTHAN, $1, $3); }
+	|	expression '=' expression				{ $$ = factory->CreateOperator(OT_EQUALS, $1, $3); }
 	;
 
 expression:	expression '+' expression			{ $$ = factory->CreateOperator(OT_PLUS, $1, $3); }
@@ -97,8 +97,9 @@ expression:	expression '+' expression			{ $$ = factory->CreateOperator(OT_PLUS, 
 	|	expression '*' expression				{ $$ = factory->CreateOperator(OT_TIMES, $1, $3); }
 	|	expression '/' expression				{ $$ = factory->CreateOperator(OT_DIVIDE, $1, $3); }
 	|	NUMBER									{ $$ = factory->CreateNumber($1); }
-	|	COLOR_NAME								{ $$ = factory->CreateColorName($1); }
+	|	COLOR_NAME								{ $$ = factory->CreateColorName((COLOR_TYPE)$1); }
 	|	'(' expression ')'						{ $$ = $2; }
+	|	'[' expression ']'						{ $$ = $2; }
 	|	function								{ $$ = $1;}
 	;
 
